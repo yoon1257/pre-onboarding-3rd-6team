@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 
 const Record = () => {
   const [stream, setStream] = useState();
@@ -34,6 +35,23 @@ const Record = () => {
       makeSound(stream);
 
       analyser.onaudioprocess = function (e) {
+        // 3분(180초) 지나면 자동으로 음성 저장 및 녹음 중지
+        if (e.playbackTime > 180) {
+          stream.getAudioTracks().forEach(function (track) {
+            track.stop();
+          });
+          mediaRecorder.stop();
+          // 메서드가 호출 된 노드 연결 해제
+          analyser.disconnect();
+          audioCtx.createMediaStreamSource(stream).disconnect();
+
+          mediaRecorder.ondataavailable = function (e) {
+            setAudioUrl(e.data);
+            setOnRec(true);
+          };
+        } else {
+          setOnRec(false);
+        }
         setOnRec(false);
       };
     });
@@ -64,7 +82,7 @@ const Record = () => {
     }
 
     // File 생성자를 사용해 파일로 변환
-    const sound = new File([audioUrl], 'soundBlob', {
+    const sound = new File([audioUrl], 'haii-audio', {
       lastModified: new Date().getTime(),
       type: 'audio',
     });
@@ -81,13 +99,25 @@ const Record = () => {
   };
 
   return (
-    <>
-      <button onClick={onRec ? onRecAudio : offRecAudio}>녹음</button>
-      <button onClick={play} disabled={disabled}>
-        재생
+    <StyledRecord>
+      <button className='btn_style' onClick={onRec ? onRecAudio : offRecAudio}>
+        {onRec ? <img alt='rec' src='/images/record/rec.png' /> : <img alt='stop' src='/images/record/stop.png' />}
       </button>
-    </>
+      <button className='btn_style' onClick={play} disabled={disabled}>
+        <img alt='palyback' src='/images/record/playback.png' />
+      </button>
+      <button className='btn_style'>
+        <img alt='reset' src='/images/record/reset.png' />
+      </button>
+    </StyledRecord>
   );
 };
 
 export default Record;
+
+const StyledRecord = styled.div`
+  .btn_style {
+    border: none;
+    background-color: transparent;
+  }
+`;
