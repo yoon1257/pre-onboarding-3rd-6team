@@ -7,10 +7,10 @@ const Record = () => {
   const [source, setSource] = useState();
   const [analyser, setAnalyser] = useState();
   const [audioUrl, setAudioUrl] = useState();
-  const [disabled, setDisabled] = useState(true); // 😀😀😀
+  const [disabled, setDisabled] = useState(true);
 
   const onRecAudio = () => {
-    setDisabled(true); // 😀😀😀
+    setDisabled(true);
 
     // 음원정보를 담은 노드를 생성하거나 음원을 실행또는 디코딩 시키는 일을 한다
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -85,7 +85,6 @@ const Record = () => {
       type: 'audio',
     });
 
-    // 😀😀😀
     setDisabled(false);
     console.log(sound); // File 정보 출력
   };
