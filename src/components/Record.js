@@ -34,23 +34,7 @@ const Record = () => {
       makeSound(stream);
 
       analyser.onaudioprocess = function (e) {
-        // 3분(180초) 지나면 자동으로 음성 저장 및 녹음 중지
-        if (e.playbackTime > 180) {
-          stream.getAudioTracks().forEach(function (track) {
-            track.stop();
-          });
-          mediaRecorder.stop();
-          // 메서드가 호출 된 노드 연결 해제
-          analyser.disconnect();
-          audioCtx.createMediaStreamSource(stream).disconnect();
-
-          mediaRecorder.ondataavailable = function (e) {
-            setAudioUrl(e.data);
-            setOnRec(true);
-          };
-        } else {
-          setOnRec(false);
-        }
+        setOnRec(false);
       };
     });
   };
