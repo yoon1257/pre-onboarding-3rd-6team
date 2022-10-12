@@ -1,6 +1,11 @@
-import React from "react";
+import React from 'react';
+import Record from '../components/Record';
 
 const Main = (props) => {
-  return <div>main</div>;
+  return (
+    <div>
+      <Record />
+    </div>
+  );
 };
 export default Main;
