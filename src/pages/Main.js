@@ -15,8 +15,8 @@ const Main = (props) => {
         </Logo>
       </header>
       <main className='sound-status-screen'>
-        <img className='sound-wave' src={waveSoundPlay} alt='sound-wave' />
-        <div className='sound-time'></div>
+        <img className='sound-wave' src={waveSoundStop} alt='sound-wave' />
+        <div className='sound-time'>01:08</div>
       </main>
       <MovingBar />
     </RecorderContainer>
@@ -48,10 +48,20 @@ const RecorderContainer = styled.div`
 
   .sound-status-screen {
     ${FlexCenter};
+    flex-direction: column;
+    justify-content: space-evenly;
     height: 55vh;
 
     .sound-wave {
-      width: 11.8em;
+      width: 11em;
+      height: 10em;
+      margin-top: 3.75em;
+    }
+
+    .sound-time {
+      color: #45c7db;
+      font-size: 1.5em;
+      font-weight: 500;
     }
   }
 

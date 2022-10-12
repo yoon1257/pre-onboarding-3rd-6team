@@ -38,7 +38,7 @@ const OptionBtn = styled.div`
   align-items: center;
 
   svg {
-    font-size: 4em;
+    font-size: 3em;
     color: #c2c2c2;
   }
 `;
