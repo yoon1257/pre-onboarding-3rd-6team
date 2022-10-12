@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function App() {
+const Record = () => {
   const [stream, setStream] = useState();
   const [media, setMedia] = useState();
   const [onRec, setOnRec] = useState(true);
@@ -105,6 +105,6 @@ function App() {
       </button>
     </>
   );
-}
+};
 
-export default App;
+export default Record;
