@@ -13,7 +13,7 @@ const PlayControlBox = ({ recordStatus, setStatus }) => {
 
   return (
     <StyledControlBox>
-      <OptionBtn onClick={() => setStatus('record')}>
+      <OptionBtn className={recordStatus} onClick={() => setStatus('record')}>
         <BiReset />
       </OptionBtn>
       <button className='play-control-btn' onClick={handleBtnChange}>
@@ -22,7 +22,7 @@ const PlayControlBox = ({ recordStatus, setStatus }) => {
         {recordStatus === 'play' && <BsPlayCircle />}
         {recordStatus === 'pause' && <BsPauseCircleFill />}
       </button>
-      <OptionBtn>
+      <OptionBtn className={recordStatus}>
         <BiDownArrowCircle />
       </OptionBtn>
     </StyledControlBox>
@@ -52,12 +52,12 @@ const OptionBtn = styled.button`
   display: flex;
   align-items: center;
   border: none;
-  background-color: ${(props) => (props.className ? '#05aac6' : '#f5f5f5')};
+  background-color: #f5f5f5;
   cursor: pointer;
 
   svg {
     font-size: 3em;
-    color: #c2c2c2;
+    color: ${(props) => (props.className === 'play' || props.className === 'pause' ? '#05aac6' : '#c2c2c2')};
   }
 `;
 export default PlayControlBox;

@@ -22,12 +22,8 @@ export default function Timer() {
   }, [minutes, seconds]);
 
   return (
-    <>
-      <div>
-        <h2>
-          {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
-        </h2>
-      </div>
-    </>
+    <h2>
+      {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
+    </h2>
   );
 }

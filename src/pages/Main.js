@@ -1,5 +1,6 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import MovingBar from '../components/recordUI/MovingBar';
+import Timer from '../components/Timer';
 import styled, { css } from 'styled-components';
 import logo from '../asset/images/logo.png';
 import waveSoundPlay from '../asset/images/wave-sound-blue.png';
@@ -17,7 +18,7 @@ const Main = (props) => {
       </header>
       <main className='sound-status-screen'>
         <img className='sound-wave' src={recordStatus === 'stop' ? waveSoundPlay : waveSoundStop} alt='sound-wave' />
-        {recordStatus === 'stop' && <div className='sound-time'>01:08</div>}
+        <div className='sound-time'> {recordStatus === 'stop' ? <Timer /> : '0:00'}</div>
       </main>
       <MovingBar recordStatus={recordStatus} setStatus={setStatus} />
     </RecorderContainer>
@@ -52,14 +53,17 @@ const RecorderContainer = styled.div`
     flex-direction: column;
     justify-content: space-evenly;
     height: 55vh;
+    padding: 5em;
 
     .sound-wave {
       width: 11em;
-      height: 10em;
-      margin-top: 3.75em;
+      /* flex-basis: 30vh; */
     }
 
     .sound-time {
+      ${FlexCenter};
+      margin-top: 1em;
+      height: 2em;
       color: #45c7db;
       font-size: 1.5em;
       font-weight: 500;
