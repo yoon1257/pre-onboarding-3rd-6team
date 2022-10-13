@@ -1,8 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useRef, useContext } from 'react';
+import { RecordContext } from '../../contexts/Context';
 import PlayControlBox from './PlayControlBox';
 import styled, { css } from 'styled-components';
 
-const MovingBar = ({ recordStatus, setStatus }) => {
+const MovingBar = () => {
+  const { recordStatus, setStatus } = useContext(RecordContext);
   const handleUpDown = () => {
     // console.log(e.target.classList);
     console.log(containerRef.current.classList);
@@ -13,7 +15,7 @@ const MovingBar = ({ recordStatus, setStatus }) => {
   return (
     <StyledMovingBar ref={containerRef}>
       <div className='click-bar' onClick={handleUpDown}></div>
-      <PlayControlBox recordStatus={recordStatus} setStatus={setStatus} />
+      <PlayControlBox />
     </StyledMovingBar>
   );
 };

@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import { BiReset, BiDownArrowCircle } from 'react-icons/bi';
 import { BsCircleFill, BsStopCircle, BsPlayCircle, BsPauseCircleFill } from 'react-icons/bs';
 
-const PlayControlBox = ({ recordStatus, setStatus }) => {
-  const { onRecAudio, offRecAudio, play } = useContext(RecordContext);
+const PlayControlBox = () => {
+  const { onRecAudio, offRecAudio, play, recordStatus, setStatus } = useContext(RecordContext);
   const handleBtnChange = () => {
     if (recordStatus === 'record') setStatus('stop');
     else if (recordStatus === 'stop') setStatus('play');
@@ -17,19 +17,20 @@ const PlayControlBox = ({ recordStatus, setStatus }) => {
     <StyledControlBox>
       <OptionBtn
         className={recordStatus}
+        disabled={(recordStatus === 'record' || recordStatus === 'stop') && true}
         onClick={() => {
           setStatus('record');
           window.location.reload();
         }}>
         <BiReset />
       </OptionBtn>
-      <button className='play-control-btn' onClick={handleBtnChange}>
+      <OptionBtn size='3.5em' onClick={handleBtnChange}>
         {recordStatus === 'record' && <BsCircleFill onClick={onRecAudio} />}
         {recordStatus === 'stop' && <BsStopCircle onClick={offRecAudio} />}
         {recordStatus === 'play' && <BsPlayCircle onClick={play} />}
         {recordStatus === 'pause' && <BsPauseCircleFill />}
-      </button>
-      <OptionBtn className={recordStatus}>
+      </OptionBtn>
+      <OptionBtn className={recordStatus} disabled={(recordStatus === 'record' || recordStatus === 'stop') && true}>
         <BiDownArrowCircle />
       </OptionBtn>
     </StyledControlBox>
@@ -42,29 +43,19 @@ const StyledControlBox = styled.div`
   justify-content: space-around;
   height: 30vh;
   margin: auto 0;
-
-  .play-control-btn {
-    display: flex;
-    text-align: center;
-    align-items: center;
-    font-size: 3em;
-    color: #05aac6;
-    background-color: #f5f5f5;
-    border: none;
-    cursor: pointer;
-  }
 `;
 
 const OptionBtn = styled.button`
   display: flex;
   align-items: center;
   border: none;
+  color: #05aac6;
+  font-size: ${(props) => props.size || '3em'};
   background-color: #f5f5f5;
   cursor: pointer;
 
-  svg {
-    font-size: 3em;
-    color: ${(props) => (props.className === 'play' || props.className === 'pause' ? '#05aac6' : '#c2c2c2')};
+  &:disabled {
+    color: #c2c2c2;
   }
 `;
 export default PlayControlBox;
