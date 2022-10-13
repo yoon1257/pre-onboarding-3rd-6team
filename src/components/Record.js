@@ -12,7 +12,6 @@ const Record = () => {
   const [disabled, setDisabled] = useState(true);
   const [timeChange, setTimeChange] = useState(5);
   const [timer, setTimer] = useState('00:00.00');
-
   const [playTimer, setPlayTimer] = useState(false);
   const [recordTimer, setRecordTimer] = useState(false);
 
