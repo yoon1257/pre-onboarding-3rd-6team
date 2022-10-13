@@ -1,8 +1,22 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import Timer from './Timer';
+import React, { createContext, useState } from 'react';
+import useInterval from 'use-interval';
 
-const Record = () => {
+export const RecordContext = createContext({
+  onRecAudio: () => {},
+  offRecAudio: () => {},
+  play: () => {},
+  pause: () => {},
+  timer: '00:00',
+
+  recordStatus: 'record',
+  setStatus: () => {},
+
+  url: '',
+  handleSelect: () => {},
+});
+
+const Context = ({ children }) => {
+  const [recordStatus, setStatus] = useState('record');
   const [stream, setStream] = useState();
   const [media, setMedia] = useState();
   const [onRec, setOnRec] = useState(true);
@@ -10,10 +24,17 @@ const Record = () => {
   const [analyser, setAnalyser] = useState();
   const [audioUrl, setAudioUrl] = useState();
   const [disabled, setDisabled] = useState(true);
-  const [timeChange, setTimeChange] = useState(5);
-  const [timer, setTimer] = useState('00:00.00');
+  const [timeChange, setTimeChange] = useState(100);
+  const [timer, setTimer] = useState('00:00');
   const [playTimer, setPlayTimer] = useState(false);
   const [recordTimer, setRecordTimer] = useState(false);
+  const [url, setUrl] = useState('');
+
+  // useInterval(() => {
+  //   // Your custom logic here
+  //   recordStatus === 'pause' && setCount(count + 1);
+  //   console.log(count);
+  // }, 1000);
 
   const onRecAudio = () => {
     // 음원정보를 담은 노드를 생성하거나 음원을 실행또는 디코딩 시키는 일을 한다
@@ -60,6 +81,7 @@ const Record = () => {
           };
           console.log('ondataavailable');
           alert('녹음이 완료되었습니다.');
+          setStatus('play');
           if (audioUrl) {
             URL.createObjectURL(audioUrl); // 출력된 링크에서 녹음된 오디오 확인 가능
           }
@@ -72,7 +94,7 @@ const Record = () => {
         } else {
           setOnRec(false);
         }
-        setTimer(e.playbackTime.toFixed(2));
+        setTimer(e.playbackTime.toFixed(0));
       };
     });
   };
@@ -81,7 +103,6 @@ const Record = () => {
   const offRecAudio = () => {
     // dataavailable 이벤트로 Blob 데이터에 대한 응답을 받을 수 있음
     media.ondataavailable = function (e) {
-      console.log('뫄', e.data);
       setAudioUrl(e.data);
       setOnRec(true);
     };
@@ -99,7 +120,7 @@ const Record = () => {
     source.disconnect();
 
     if (audioUrl) {
-      const url = URL.createObjectURL(audioUrl);
+      setUrl(URL.createObjectURL(audioUrl).substr(5) + '.mp4');
       console.log('url', url); // 출력된 링크에서 녹음된 오디오 확인 가능
     }
 
@@ -110,7 +131,6 @@ const Record = () => {
     });
 
     setDisabled(false);
-    console.log(sound); // File 정보 출력
   };
 
   const play = () => {
@@ -118,49 +138,22 @@ const Record = () => {
     audio.loop = false;
     audio.volume = 1;
     audio.play();
-    setPlayTimer(!playTimer);
-    console.log('play');
   };
-  const reset = () => {};
+
+  const pause = () => {
+    // audio.pause();
+    // audio.currentTime = 0;
+  };
 
   const handleSelect = (e) => {
     setTimeChange(e.target.value);
-    console.log(timeChange);
   };
-
   return (
-    <StyledRecord>
-      <button className='btn_style' onClick={onRec ? onRecAudio : offRecAudio}>
-        {onRec ? <img alt='rec' src='/images/record/rec.png' /> : <img alt='stop' src='/images/record/stop.png' />}
-      </button>
-      <button className='btn_style' onClick={play}>
-        <img alt='palyback' src='/images/record/playback.png' />
-      </button>
-      <button className='btn_style' onClick={reset}>
-      </button>
-      <button className='btn_style' onClick={play} disabled={disabled}>
-        <img alt='palyback' src='/images/record/playback.png' />
-      </button>
-      <button className='btn_style'>
-        <img alt='reset' src='/images/record/reset.png' />
-      </button>
-      <section className='record-time'>{timer}</section>
-      <select onChange={handleSelect}>
-        <option value='0'>초를 입력해주세요</option>
-        <option value='60'>1분</option>
-        <option value='180'>3분</option>
-        <option value='300'>5분</option>
-      </select>
-    </StyledRecord>
+    <RecordContext.Provider
+      value={{ onRecAudio, offRecAudio, play, pause, timer, recordStatus, setStatus, url, handleSelect }}>
+      {children}
+    </RecordContext.Provider>
   );
 };
 
-export default Record;
-
-const StyledRecord = styled.div`
-  .btn_style {
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-  }
-`;
+export default Context;

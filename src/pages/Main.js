@@ -1,15 +1,17 @@
-import React, { useRef, useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { RecordContext } from '../contexts/Context';
 import MovingBar from '../components/recordUI/MovingBar';
-import styled, { css } from 'styled-components';
+import Timer from '../components/Timer';
+import styled, { css, keyframes } from 'styled-components';
 import logo from '../asset/images/logo.png';
 import waveSoundPlay from '../asset/images/wave-sound-blue.png';
 import waveSoundStop from '../asset/images/wave-sound-sky.png';
-import Record from '../components/Record';
 
-const Main = (props) => {
+const Main = () => {
+  const { timer, recordStatus } = useContext(RecordContext);
+
   return (
-    <RecorderContainer>
-      <Record />
+    <RecorderContainer transition={`width ${timer}s`}>
       <header>
         <Logo>
           <img src={logo} alt='logo' />
@@ -17,8 +19,13 @@ const Main = (props) => {
         </Logo>
       </header>
       <main className='sound-status-screen'>
-        <img className='sound-wave' src={waveSoundStop} alt='sound-wave' />
-        <div className='sound-time'>01:08</div>
+        <div className='wave-box'>
+          <div className={`sound-wave-box ${recordStatus}`}>
+            <img className='play-wave' src={waveSoundPlay} alt='sound-wave' />
+          </div>
+          <img className='stop-wave' src={waveSoundStop} alt='sound-wave' />
+        </div>
+        <div className='sound-time'>{recordStatus !== 'record' && <Timer />}</div>
       </main>
       <MovingBar />
     </RecorderContainer>
@@ -29,6 +36,16 @@ const FlexCenter = css`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const WaveMove = keyframes`
+  0% {
+    width: 0;
+  }
+
+  100% {
+    width: 11em;
+  }
 `;
 
 const RecorderContainer = styled.div`
@@ -49,21 +66,64 @@ const RecorderContainer = styled.div`
   }
 
   .sound-status-screen {
-    ${FlexCenter};
-    flex-direction: column;
-    justify-content: space-evenly;
-    height: 55vh;
+    margin: 0 auto;
+    height: 44vh;
 
-    .sound-wave {
+    .wave-box {
+      position: relative;
       width: 11em;
-      height: 10em;
-      margin-top: 3.75em;
+      margin: 12vh auto 0;
+
+      .record {
+        width: 0;
+      }
+
+      .stop {
+        animation: ${WaveMove} 2s 1s infinite linear alternate;
+      }
+
+      .play {
+        width: 0;
+      }
+
+      .pause {
+        width: 11em;
+        transition: ${(props) => props.transition};
+      }
+    }
+  }
+  .sound-wave-box {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+
+    .play-wave {
+      width: 11em;
+      /* height: 11em; */
+    }
+  }
+  .stop-wave {
+    position: absolute;
+    top: 0px;
+    width: 11em;
+    height: 11em;
+  }
+
+  .sound-time {
+    ${FlexCenter};
+    margin: 2em 0;
+    height: 2em;
+    font-size: 1em;
+    font-weight: 400;
+
+    .play,
+    .record {
+      color: #787878;
     }
 
-    .sound-time {
-      color: #45c7db;
-      font-size: 1.5em;
-      font-weight: 500;
+    .stop,
+    .pause {
+      color: #05aac6;
     }
   }
 

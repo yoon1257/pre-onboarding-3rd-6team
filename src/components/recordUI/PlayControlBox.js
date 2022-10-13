@@ -1,23 +1,42 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { RecordContext } from '../../contexts/Context';
 import styled from 'styled-components';
 import { BiReset, BiDownArrowCircle } from 'react-icons/bi';
 import { BsCircleFill, BsStopCircle, BsPlayCircle, BsPauseCircleFill } from 'react-icons/bs';
 
 const PlayControlBox = () => {
-  const [recordStatus, setStatus] = useState('standBy');
-
+  const { onRecAudio, offRecAudio, play, pause, recordStatus, setStatus, url } = useContext(RecordContext);
+  const [ture, setTrue] = useState();
+  const handleBtnChange = () => {
+    if (recordStatus === 'record') setStatus('stop');
+    else if (recordStatus === 'stop') setStatus('play');
+    else if (recordStatus === 'play') setStatus('pause');
+    else if (recordStatus === 'pause') setStatus('record');
+  };
   return (
     <StyledControlBox>
-      <OptionBtn>
+      <OptionBtn
+        className={recordStatus}
+        disabled={(recordStatus === 'record' || recordStatus === 'stop') && true}
+        onClick={() => {
+          setStatus('record');
+          window.location.reload();
+          setTrue();
+        }}>
         <BiReset />
       </OptionBtn>
-      <button className='play-control-btn'>
-        <BsCircleFill />
-      </button>
-      {/* <button className='record-start'></button> */}
-      <OptionBtn>
-        <BiDownArrowCircle />
+      <OptionBtn size='3.5em' onClick={handleBtnChange}>
+        {recordStatus === 'record' && <BsCircleFill onClick={onRecAudio} />}
+        {recordStatus === 'stop' && <BsStopCircle onClick={offRecAudio} />}
+        {recordStatus === 'play' && <BsPlayCircle onClick={play} />}
+        {recordStatus === 'pause' && <BsPauseCircleFill onClick={pause} />}
       </OptionBtn>
+
+      <a href={recordStatus === 'play' ? `${url}` : '#'} download>
+        <OptionBtn>
+          <BiDownArrowCircle className={recordStatus} />
+        </OptionBtn>
+      </a>
     </StyledControlBox>
   );
 };
@@ -28,39 +47,20 @@ const StyledControlBox = styled.div`
   justify-content: space-around;
   height: 30vh;
   margin: auto 0;
-
-  .play-control-btn {
-    display: flex;
-    text-align: center;
-    align-items: center;
-    font-size: 3em;
-    color: #05aac6;
-    background-color: #f5f5f5;
-    border: none;
-    cursor: pointer;
-  }
-
-  .record-start {
-    text-align: center;
-    align-items: center;
-    width: 4em;
-    height: 4em;
-    background-color: #05aac6;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-  }
 `;
 
 const OptionBtn = styled.button`
   display: flex;
   align-items: center;
   border: none;
+  color: #05aac6;
+  font-size: ${(props) => props.size || '3em'};
   background-color: #f5f5f5;
   cursor: pointer;
 
-  svg {
-    font-size: 3em;
+  &:disabled,
+  .record,
+  .stop {
     color: #c2c2c2;
   }
 `;
