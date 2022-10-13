@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Timer from './Timer';
 
-
 const Record = () => {
   const [stream, setStream] = useState();
   const [media, setMedia] = useState();
@@ -14,7 +13,6 @@ const Record = () => {
   const [timeChange, setTimeChange] = useState(60);
   const [playTimer, setPlayTimer] = useState(false);
   const [recordTimer, setRecordTimer] = useState(false);
-
 
   const onRecAudio = () => {
     setDisabled(true);
@@ -114,6 +112,10 @@ const Record = () => {
     <StyledRecord>
       <button className='btn_style' onClick={onRec ? onRecAudio : offRecAudio}>
         {onRec ? <img alt='rec' src='/images/record/rec.png' /> : <img alt='stop' src='/images/record/stop.png' />}
+      </button>
+      <button className='btn_style' onClick={play} disabled={disabled}>
+        <img alt='palyback' src='/images/record/playback.png' />
+      </button>
       </button>
       <button className='btn_style' onClick={play} disabled={disabled}>
         <img alt='palyback' src='/images/record/playback.png' />
