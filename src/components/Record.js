@@ -9,6 +9,7 @@ const Record = () => {
   const [analyser, setAnalyser] = useState();
   const [audioUrl, setAudioUrl] = useState();
   const [disabled, setDisabled] = useState(true);
+  const [timeChange, setTimeChange] = useState(60);
 
   const onRecAudio = () => {
     setDisabled(true);
@@ -36,7 +37,7 @@ const Record = () => {
 
       analyser.onaudioprocess = function (e) {
         // 3분(180초) 지나면 자동으로 음성 저장 및 녹음 중지
-        if (e.playbackTime > 180) {
+        if (e.playbackTime > { timeChange }) {
           stream.getAudioTracks().forEach(function (track) {
             track.stop();
           });
@@ -98,6 +99,9 @@ const Record = () => {
     audio.play();
   };
 
+  const handleSelect = (e) => {
+    setTimeChange(e.target.value);
+  };
   return (
     <StyledRecord>
       <button className='btn_style' onClick={onRec ? onRecAudio : offRecAudio}>
@@ -109,6 +113,11 @@ const Record = () => {
       <button className='btn_style'>
         <img alt='reset' src='/images/record/reset.png' />
       </button>
+      <select onChange={handleSelect}>
+        <option value='60'>1분</option>
+        <option value='180'>3분</option>
+        <option value='300'>5분</option>
+      </select>
     </StyledRecord>
   );
 };
