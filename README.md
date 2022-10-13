@@ -1,70 +1,108 @@
-# Getting Started with Create React App
+# ✨ 프리온보딩 프론트 6팀 2주차 3번미션
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 프로젝트 설명
 
-## Available Scripts
+- 오디오를 녹음하고, 재생하는 등 오디오 파일을 관리하는 프로그램을 개발합니다
+- 반응형 페이지를 구성합니다 
+  <br/>
+  <br/>
 
-In the project directory, you can run:
+## 언어
+- JavaScript
+- React.js
+  <br/>
+  <br/>
 
-### `npm start`
+## 라이브러리
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- styled-components
+- react-dom
+- react-router-dom
+- prettier
+- save
+  <br/>
+  <br/>
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+# 프로젝트 설치 및 실행 방법
 
-### `npm test`
+## ✅ 설치방법
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Node.JS를 다운받아 설치해주세요. 
 
-### `npm run build`
+```
+https://nodejs.org/
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+<br/>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. 리포지토리를 클론해주세요.<br/>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+git clone https://github.com/yoon1257/pre-onboarding-3rd-6team.git
+```
 
-### `npm run eject`
+<br/>
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+3.dependencies를 설치해주세요.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+npm install
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+<br/>
+<br/>
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## ✅ 실행방법
 
-## Learn More
+1. 다음 명령어를 이용해 react server를 실행시켜주세요.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
+npm run start
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+<br/>
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
+   <br/>
+   <br/>
+   <br/>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- ✅ 프로젝트내 이미지는 모두 (주)바딧 에서 제공받았습니다.
+  <br/>
+  <br/>
 
-### Making a Progressive Web App
+# 기능 분담
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+> 박기호 - 
 
-### Advanced Configuration
+> 이유나 - 녹음 및 재생기능 타이머에 따른 녹음기능 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+> 정예원 - 전체 UI, 레이아웃 및 반응형
 
-### Deployment
+<br/>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+# 주요기능 및 설명
 
-### `npm run build` fails to minify
+## ✅ 메인 카테고리별 Nav 구현
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+# 팀원소개
+
+### ✅ 프론트엔드 박기호 
+
+- 깃허브 
+- 블로그 
+
+
+### ✅ 프론트엔드 이유나
+
+- 깃허브 https://github.com/yoon1257
+- 블로그 https://velog.io/@yoon_reve
+
+### ✅ 프론트엔드 정예원
+
+- 깃허브 
+- 블로그 
+
