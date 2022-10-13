@@ -5,8 +5,7 @@ import { BiReset, BiDownArrowCircle } from 'react-icons/bi';
 import { BsCircleFill, BsStopCircle, BsPlayCircle, BsPauseCircleFill } from 'react-icons/bs';
 
 const PlayControlBox = () => {
-  const { onRecAudio, offRecAudio, play, pause, recordStatus, setStatus, url } = useContext(RecordContext);
-  const [ture, setTrue] = useState();
+  const { onRecAudio, offRecAudio, play, recordStatus, setStatus, url } = useContext(RecordContext);
   const handleBtnChange = () => {
     if (recordStatus === 'record') setStatus('stop');
     else if (recordStatus === 'stop') setStatus('play');
@@ -21,7 +20,6 @@ const PlayControlBox = () => {
         onClick={() => {
           setStatus('record');
           window.location.reload();
-          setTrue();
         }}>
         <BiReset />
       </OptionBtn>
@@ -29,7 +27,7 @@ const PlayControlBox = () => {
         {recordStatus === 'record' && <BsCircleFill onClick={onRecAudio} />}
         {recordStatus === 'stop' && <BsStopCircle onClick={offRecAudio} />}
         {recordStatus === 'play' && <BsPlayCircle onClick={play} />}
-        {recordStatus === 'pause' && <BsPauseCircleFill onClick={pause} />}
+        {recordStatus === 'pause' && <BsPauseCircleFill />}
       </OptionBtn>
 
       <a href={recordStatus === 'play' ? `${url}` : '#'} download>

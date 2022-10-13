@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { RecordContext } from '../contexts/Context';
 import MovingBar from '../components/recordUI/MovingBar';
 import Timer from '../components/Timer';
