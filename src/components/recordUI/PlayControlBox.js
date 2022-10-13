@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { RecordContext } from '../../contexts/Context';
 import styled from 'styled-components';
 import { BiReset, BiDownArrowCircle } from 'react-icons/bi';
 import { BsCircleFill, BsStopCircle, BsPlayCircle, BsPauseCircleFill } from 'react-icons/bs';
 
 const PlayControlBox = ({ recordStatus, setStatus }) => {
-  console.log(recordStatus);
   const handleBtnChange = () => {
     if (recordStatus === 'record') setStatus('stop');
     else if (recordStatus === 'stop') setStatus('play');
     else if (recordStatus === 'play') setStatus('pause');
   };
-
+  const { babo } = useContext(RecordContext);
+  console.log('테스트', babo);
   return (
     <StyledControlBox>
       <OptionBtn className={recordStatus} onClick={() => setStatus('record')}>

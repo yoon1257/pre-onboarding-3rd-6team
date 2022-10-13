@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Timer from './Timer';
 
-
 const Record = () => {
   const [stream, setStream] = useState();
   const [media, setMedia] = useState();
@@ -14,7 +13,6 @@ const Record = () => {
   const [timeChange, setTimeChange] = useState(60);
   const [playTimer, setPlayTimer] = useState(false);
   const [recordTimer, setRecordTimer] = useState(false);
-
 
   const onRecAudio = () => {
     setDisabled(true);
@@ -86,7 +84,8 @@ const Record = () => {
     source.disconnect();
 
     if (audioUrl) {
-      URL.createObjectURL(audioUrl); // 출력된 링크에서 녹음된 오디오 확인 가능
+      const url = URL.createObjectURL(audioUrl);
+      console.log('url', url); // 출력된 링크에서 녹음된 오디오 확인 가능
     }
 
     // File 생성자를 사용해 파일로 변환
@@ -110,6 +109,7 @@ const Record = () => {
   const handleSelect = (e) => {
     setTimeChange(e.target.value);
   };
+
   return (
     <StyledRecord>
       <button className='btn_style' onClick={onRec ? onRecAudio : offRecAudio}>
