@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Timer from './Timer';
 
-
 const Record = () => {
   const [stream, setStream] = useState();
   const [media, setMedia] = useState();
@@ -11,14 +10,13 @@ const Record = () => {
   const [analyser, setAnalyser] = useState();
   const [audioUrl, setAudioUrl] = useState();
   const [disabled, setDisabled] = useState(true);
-  const [timeChange, setTimeChange] = useState(60);
+  const [timeChange, setTimeChange] = useState(5);
+  const [timer, setTimer] = useState('00:00.00');
+
   const [playTimer, setPlayTimer] = useState(false);
   const [recordTimer, setRecordTimer] = useState(false);
 
-
   const onRecAudio = () => {
-    setDisabled(true);
-
     // 음원정보를 담은 노드를 생성하거나 음원을 실행또는 디코딩 시키는 일을 한다
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     // 자바스크립트를 통해 음원의 진행상태에 직접접근에 사용된다.
@@ -29,6 +27,7 @@ const Record = () => {
       // 내 컴퓨터의 마이크나 다른 소스를 통해 발생한 오디오 스트림의 정보를 보여준다.
       const source = audioCtx.createMediaStreamSource(stream);
       setSource(source);
+
       source.connect(analyser);
       analyser.connect(audioCtx.destination);
     }
@@ -43,23 +42,38 @@ const Record = () => {
 
       analyser.onaudioprocess = function (e) {
         // 3분(180초) 지나면 자동으로 음성 저장 및 녹음 중지
-        if (e.playbackTime > { timeChange }) {
+        if (e.playbackTime > timeChange) {
           stream.getAudioTracks().forEach(function (track) {
             track.stop();
+            console.log('track.stop');
           });
           mediaRecorder.stop();
+          console.log('stop');
           // 메서드가 호출 된 노드 연결 해제
           analyser.disconnect();
+          console.log('disconnect');
           audioCtx.createMediaStreamSource(stream).disconnect();
+          console.log('createMediaStreamSource');
 
           mediaRecorder.ondataavailable = function (e) {
             setAudioUrl(e.data);
             setOnRec(true);
           };
+          console.log('ondataavailable');
+          alert('녹음이 완료되었습니다.');
+          if (audioUrl) {
+            URL.createObjectURL(audioUrl); // 출력된 링크에서 녹음된 오디오 확인 가능
+          }
+
+          // File 생성자를 사용해 파일로 변환
+          const sound = new File([audioUrl], 'haii-audio', {
+            lastModified: new Date().getTime(),
+            type: 'audio',
+          });
         } else {
           setOnRec(false);
         }
-        setOnRec(false);
+        setTimer(e.playbackTime.toFixed(2));
       };
     });
   };
@@ -68,9 +82,9 @@ const Record = () => {
   const offRecAudio = () => {
     // dataavailable 이벤트로 Blob 데이터에 대한 응답을 받을 수 있음
     media.ondataavailable = function (e) {
+      console.log('뫄', e.data);
       setAudioUrl(e.data);
       setOnRec(true);
-      setRecordTimer(false);
     };
 
     // 모든 트랙에서 stop()을 호출해 오디오 스트림을 정지
@@ -105,23 +119,29 @@ const Record = () => {
     audio.volume = 1;
     audio.play();
     setPlayTimer(!playTimer);
+    console.log('play');
   };
+  const reset = () => {};
 
   const handleSelect = (e) => {
     setTimeChange(e.target.value);
+    console.log(timeChange);
   };
+
   return (
     <StyledRecord>
       <button className='btn_style' onClick={onRec ? onRecAudio : offRecAudio}>
         {onRec ? <img alt='rec' src='/images/record/rec.png' /> : <img alt='stop' src='/images/record/stop.png' />}
       </button>
-      <button className='btn_style' onClick={play} disabled={disabled}>
+      <button className='btn_style' onClick={play}>
         <img alt='palyback' src='/images/record/playback.png' />
       </button>
-      <button className='btn_style'>
+      <button className='btn_style' onClick={reset}>
         <img alt='reset' src='/images/record/reset.png' />
       </button>
+      <section className='record-time'>{timer}</section>
       <select onChange={handleSelect}>
+        <option value='0'>초를 입력해주세요</option>
         <option value='60'>1분</option>
         <option value='180'>3분</option>
         <option value='300'>5분</option>
@@ -136,5 +156,6 @@ const StyledRecord = styled.div`
   .btn_style {
     border: none;
     background-color: transparent;
+    cursor: pointer;
   }
 `;
