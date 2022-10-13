@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import Timer from './Timer';
 
-function App() {
+
+const Record = () => {
   const [stream, setStream] = useState();
   const [media, setMedia] = useState();
   const [onRec, setOnRec] = useState(true);
@@ -9,8 +11,10 @@ function App() {
   const [analyser, setAnalyser] = useState();
   const [audioUrl, setAudioUrl] = useState();
   const [disabled, setDisabled] = useState(true);
+  const [timeChange, setTimeChange] = useState(60);
   const [playTimer, setPlayTimer] = useState(false);
   const [recordTimer, setRecordTimer] = useState(false);
+
 
   const onRecAudio = () => {
     setDisabled(true);
@@ -39,7 +43,7 @@ function App() {
 
       analyser.onaudioprocess = function (e) {
         // 3분(180초) 지나면 자동으로 음성 저장 및 녹음 중지
-        if (e.playbackTime > 180) {
+        if (e.playbackTime > { timeChange }) {
           stream.getAudioTracks().forEach(function (track) {
             track.stop();
           });
@@ -55,6 +59,7 @@ function App() {
         } else {
           setOnRec(false);
         }
+        setOnRec(false);
       };
     });
   };
@@ -85,7 +90,7 @@ function App() {
     }
 
     // File 생성자를 사용해 파일로 변환
-    const sound = new File([audioUrl], 'soundBlob', {
+    const sound = new File([audioUrl], 'haii-audio', {
       lastModified: new Date().getTime(),
       type: 'audio',
     });
@@ -102,16 +107,34 @@ function App() {
     setPlayTimer(!playTimer);
   };
 
+  const handleSelect = (e) => {
+    setTimeChange(e.target.value);
+  };
   return (
-    <>
-      <button onClick={onRec ? onRecAudio : offRecAudio}>녹음</button>
-      {recordTimer && <Timer />}
-      <button onClick={play} disabled={disabled}>
-        재생
+    <StyledRecord>
+      <button className='btn_style' onClick={onRec ? onRecAudio : offRecAudio}>
+        {onRec ? <img alt='rec' src='/images/record/rec.png' /> : <img alt='stop' src='/images/record/stop.png' />}
       </button>
-      {playTimer && <Timer />}
-    </>
+      <button className='btn_style' onClick={play} disabled={disabled}>
+        <img alt='palyback' src='/images/record/playback.png' />
+      </button>
+      <button className='btn_style'>
+        <img alt='reset' src='/images/record/reset.png' />
+      </button>
+      <select onChange={handleSelect}>
+        <option value='60'>1분</option>
+        <option value='180'>3분</option>
+        <option value='300'>5분</option>
+      </select>
+    </StyledRecord>
   );
-}
+};
 
-export default App;
+export default Record;
+
+const StyledRecord = styled.div`
+  .btn_style {
+    border: none;
+    background-color: transparent;
+  }
+`;
