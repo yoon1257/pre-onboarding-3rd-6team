@@ -8,7 +8,7 @@ const Router = (props) => {
   return (
     <Context>
       <ThemeProvider>
-        <BrowserRouter>
+        <BrowserRouter basename='pre-onboarding-3rd-6team'>
           <Routes>
             <Route path='/' element={<Main />} />
           </Routes>
