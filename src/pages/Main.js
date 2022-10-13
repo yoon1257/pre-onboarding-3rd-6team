@@ -40,11 +40,11 @@ const FlexCenter = css`
 
 const WaveMove = keyframes`
   0% {
-    width: 11em;
+    width: 0;
   }
 
   100% {
-    width: 0;
+    width: 11em;
   }
 `;
 

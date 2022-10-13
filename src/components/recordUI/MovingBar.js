@@ -1,6 +1,7 @@
 import React, { useRef, useContext } from 'react';
 import { RecordContext } from '../../contexts/Context';
 import PlayControlBox from './PlayControlBox';
+import SelectRecordInput from './SelectRecordInput';
 import styled, { css } from 'styled-components';
 
 const MovingBar = () => {
@@ -16,6 +17,7 @@ const MovingBar = () => {
     <StyledMovingBar ref={containerRef}>
       <div className='click-bar' onClick={handleUpDown}></div>
       <PlayControlBox />
+      <SelectRecordInput />
     </StyledMovingBar>
   );
 };

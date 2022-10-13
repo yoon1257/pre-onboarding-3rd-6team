@@ -5,14 +5,15 @@ import { BiReset, BiDownArrowCircle } from 'react-icons/bi';
 import { BsCircleFill, BsStopCircle, BsPlayCircle, BsPauseCircleFill } from 'react-icons/bs';
 
 const PlayControlBox = () => {
-  const { onRecAudio, offRecAudio, play, recordStatus, setStatus } = useContext(RecordContext);
+  const { onRecAudio, offRecAudio, play, recordStatus, setStatus, url } = useContext(RecordContext);
+  const [ture, setTrue] = useState();
   const handleBtnChange = () => {
     if (recordStatus === 'record') setStatus('stop');
     else if (recordStatus === 'stop') setStatus('play');
     else if (recordStatus === 'play') setStatus('pause');
-    else if (recordStatus === 'pause') setStatus('play');
+    else if (recordStatus === 'pause') setStatus('record');
   };
-
+  console.log(url);
   return (
     <StyledControlBox>
       <OptionBtn
@@ -21,6 +22,7 @@ const PlayControlBox = () => {
         onClick={() => {
           setStatus('record');
           window.location.reload();
+          setTrue();
         }}>
         <BiReset />
       </OptionBtn>
@@ -30,9 +32,12 @@ const PlayControlBox = () => {
         {recordStatus === 'play' && <BsPlayCircle onClick={play} />}
         {recordStatus === 'pause' && <BsPauseCircleFill />}
       </OptionBtn>
-      <OptionBtn className={recordStatus} disabled={(recordStatus === 'record' || recordStatus === 'stop') && true}>
-        <BiDownArrowCircle />
-      </OptionBtn>
+
+      <a href={recordStatus === 'play' ? `${url}` : '#'} download>
+        <OptionBtn>
+          <BiDownArrowCircle className={recordStatus} />
+        </OptionBtn>
+      </a>
     </StyledControlBox>
   );
 };
@@ -54,7 +59,9 @@ const OptionBtn = styled.button`
   background-color: #f5f5f5;
   cursor: pointer;
 
-  &:disabled {
+  &:disabled,
+  .record,
+  .stop {
     color: #c2c2c2;
   }
 `;

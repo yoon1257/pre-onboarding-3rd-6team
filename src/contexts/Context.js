@@ -1,13 +1,17 @@
 import React, { createContext, useState } from 'react';
+import useInterval from 'use-interval';
 
 export const RecordContext = createContext({
   onRecAudio: () => {},
   offRecAudio: () => {},
   play: () => {},
   timer: '00:00',
-  
+
   recordStatus: 'record',
   setStatus: () => {},
+
+  url: '',
+  handleSelect: () => {},
 });
 
 const Context = ({ children }) => {
@@ -23,6 +27,13 @@ const Context = ({ children }) => {
   const [timer, setTimer] = useState('00:00');
   const [playTimer, setPlayTimer] = useState(false);
   const [recordTimer, setRecordTimer] = useState(false);
+  const [url, setUrl] = useState('');
+
+  // useInterval(() => {
+  //   // Your custom logic here
+  //   recordStatus === 'pause' && setCount(count + 1);
+  //   console.log(count);
+  // }, 1000);
 
   const onRecAudio = () => {
     // 음원정보를 담은 노드를 생성하거나 음원을 실행또는 디코딩 시키는 일을 한다
@@ -90,10 +101,10 @@ const Context = ({ children }) => {
   const offRecAudio = () => {
     // dataavailable 이벤트로 Blob 데이터에 대한 응답을 받을 수 있음
     media.ondataavailable = function (e) {
-      console.log('뫄', e.data);
       setAudioUrl(e.data);
       setOnRec(true);
     };
+    console.log(audioUrl);
 
     // 모든 트랙에서 stop()을 호출해 오디오 스트림을 정지
     stream.getAudioTracks().forEach(function (track) {
@@ -108,7 +119,7 @@ const Context = ({ children }) => {
     source.disconnect();
 
     if (audioUrl) {
-      const url = URL.createObjectURL(audioUrl);
+      setUrl(URL.createObjectURL(audioUrl).substr(5));
       console.log('url', url); // 출력된 링크에서 녹음된 오디오 확인 가능
     }
 
@@ -122,22 +133,20 @@ const Context = ({ children }) => {
     console.log(sound); // File 정보 출력
   };
 
-  const play = () => {
+  const play = (e) => {
     const audio = new Audio(URL.createObjectURL(audioUrl));
     audio.loop = false;
     audio.volume = 1;
     audio.play();
-    setPlayTimer(!playTimer);
-    console.log('play');
   };
-  const reset = () => {};
 
   const handleSelect = (e) => {
     setTimeChange(e.target.value);
     console.log(timeChange);
   };
   return (
-    <RecordContext.Provider value={{ onRecAudio, offRecAudio, play, timer, recordStatus, setStatus }}>
+    <RecordContext.Provider
+      value={{ onRecAudio, offRecAudio, play, timer, recordStatus, setStatus, url, handleSelect }}>
       {children}
     </RecordContext.Provider>
   );
