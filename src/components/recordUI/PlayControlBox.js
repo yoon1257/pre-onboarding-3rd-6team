@@ -3,18 +3,25 @@ import styled from 'styled-components';
 import { BiReset, BiDownArrowCircle } from 'react-icons/bi';
 import { BsCircleFill, BsStopCircle, BsPlayCircle, BsPauseCircleFill } from 'react-icons/bs';
 
-const PlayControlBox = () => {
-  const [recordStatus, setStatus] = useState('standBy');
+const PlayControlBox = ({ recordStatus, setStatus }) => {
+  console.log(recordStatus);
+  const handleBtnChange = () => {
+    if (recordStatus === 'record') setStatus('stop');
+    else if (recordStatus === 'stop') setStatus('play');
+    else if (recordStatus === 'play') setStatus('pause');
+  };
 
   return (
     <StyledControlBox>
-      <OptionBtn>
+      <OptionBtn onClick={() => setStatus('record')}>
         <BiReset />
       </OptionBtn>
-      <button className='play-control-btn'>
-        <BsCircleFill />
+      <button className='play-control-btn' onClick={handleBtnChange}>
+        {recordStatus === 'record' && <BsCircleFill />}
+        {recordStatus === 'stop' && <BsStopCircle />}
+        {recordStatus === 'play' && <BsPlayCircle />}
+        {recordStatus === 'pause' && <BsPauseCircleFill />}
       </button>
-      {/* <button className='record-start'></button> */}
       <OptionBtn>
         <BiDownArrowCircle />
       </OptionBtn>
@@ -39,24 +46,13 @@ const StyledControlBox = styled.div`
     border: none;
     cursor: pointer;
   }
-
-  .record-start {
-    text-align: center;
-    align-items: center;
-    width: 4em;
-    height: 4em;
-    background-color: #05aac6;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-  }
 `;
 
 const OptionBtn = styled.button`
   display: flex;
   align-items: center;
   border: none;
-  background-color: #f5f5f5;
+  background-color: ${(props) => (props.className ? '#05aac6' : '#f5f5f5')};
   cursor: pointer;
 
   svg {

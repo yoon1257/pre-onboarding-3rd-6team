@@ -6,6 +6,7 @@ import waveSoundPlay from '../asset/images/wave-sound-blue.png';
 import waveSoundStop from '../asset/images/wave-sound-sky.png';
 
 const Main = (props) => {
+  const [recordStatus, setStatus] = useState('record');
   return (
     <RecorderContainer>
       <header>
@@ -15,10 +16,10 @@ const Main = (props) => {
         </Logo>
       </header>
       <main className='sound-status-screen'>
-        <img className='sound-wave' src={waveSoundStop} alt='sound-wave' />
-        <div className='sound-time'>01:08</div>
+        <img className='sound-wave' src={recordStatus === 'stop' ? waveSoundPlay : waveSoundStop} alt='sound-wave' />
+        {recordStatus === 'stop' && <div className='sound-time'>01:08</div>}
       </main>
-      <MovingBar />
+      <MovingBar recordStatus={recordStatus} setStatus={setStatus} />
     </RecorderContainer>
   );
 };

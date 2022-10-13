@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import PlayControlBox from './PlayControlBox';
 import styled, { css } from 'styled-components';
 
-const MovingBar = ({ upPage, setUpPage }) => {
+const MovingBar = ({ recordStatus, setStatus }) => {
   const handleUpDown = () => {
     // console.log(e.target.classList);
     console.log(containerRef.current.classList);
@@ -13,7 +13,7 @@ const MovingBar = ({ upPage, setUpPage }) => {
   return (
     <StyledMovingBar ref={containerRef}>
       <div className='click-bar' onClick={handleUpDown}></div>
-      <PlayControlBox />
+      <PlayControlBox recordStatus={recordStatus} setStatus={setStatus} />
     </StyledMovingBar>
   );
 };
@@ -32,7 +32,7 @@ const StyledMovingBar = styled.div`
     height: 0.5em;
     margin: 0 auto;
     border-radius: 25px;
-    background-color: #C2C2C2;
+    background-color: #c2c2c2;
   }
 `;
 
