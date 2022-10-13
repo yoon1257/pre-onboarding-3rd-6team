@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import Timer from './Timer';
+
 
 const Record = () => {
   const [stream, setStream] = useState();
@@ -10,6 +12,9 @@ const Record = () => {
   const [audioUrl, setAudioUrl] = useState();
   const [disabled, setDisabled] = useState(true);
   const [timeChange, setTimeChange] = useState(60);
+  const [playTimer, setPlayTimer] = useState(false);
+  const [recordTimer, setRecordTimer] = useState(false);
+
 
   const onRecAudio = () => {
     setDisabled(true);
@@ -34,6 +39,7 @@ const Record = () => {
       setStream(stream);
       setMedia(mediaRecorder);
       makeSound(stream);
+      setRecordTimer(!recordTimer);
 
       analyser.onaudioprocess = function (e) {
         // 3분(180초) 지나면 자동으로 음성 저장 및 녹음 중지
@@ -64,6 +70,7 @@ const Record = () => {
     media.ondataavailable = function (e) {
       setAudioUrl(e.data);
       setOnRec(true);
+      setRecordTimer(false);
     };
 
     // 모든 트랙에서 stop()을 호출해 오디오 스트림을 정지
@@ -97,6 +104,7 @@ const Record = () => {
     audio.loop = false;
     audio.volume = 1;
     audio.play();
+    setPlayTimer(!playTimer);
   };
 
   const handleSelect = (e) => {
