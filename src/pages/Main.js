@@ -4,10 +4,12 @@ import styled, { css } from 'styled-components';
 import logo from '../asset/images/logo.png';
 import waveSoundPlay from '../asset/images/wave-sound-blue.png';
 import waveSoundStop from '../asset/images/wave-sound-sky.png';
+import Record from '../components/Record';
 
 const Main = (props) => {
   return (
     <RecorderContainer>
+      <Record />
       <header>
         <Logo>
           <img src={logo} alt='logo' />
