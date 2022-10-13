@@ -118,6 +118,10 @@ const Record = () => {
       <button className='btn_style' onClick={play} disabled={disabled}>
         <img alt='palyback' src='/images/record/playback.png' />
       </button>
+      </button>
+      <button className='btn_style' onClick={play} disabled={disabled}>
+        <img alt='palyback' src='/images/record/playback.png' />
+      </button>
       <button className='btn_style'>
         <img alt='reset' src='/images/record/reset.png' />
       </button>
