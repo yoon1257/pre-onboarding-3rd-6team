@@ -5,6 +5,7 @@ export const RecordContext = createContext({
   onRecAudio: () => {},
   offRecAudio: () => {},
   play: () => {},
+  pause: () => {},
   timer: '00:00',
 
   recordStatus: 'record',
@@ -80,6 +81,7 @@ const Context = ({ children }) => {
           };
           console.log('ondataavailable');
           alert('녹음이 완료되었습니다.');
+          setStatus('play');
           if (audioUrl) {
             URL.createObjectURL(audioUrl); // 출력된 링크에서 녹음된 오디오 확인 가능
           }
@@ -104,7 +106,6 @@ const Context = ({ children }) => {
       setAudioUrl(e.data);
       setOnRec(true);
     };
-    console.log(audioUrl);
 
     // 모든 트랙에서 stop()을 호출해 오디오 스트림을 정지
     stream.getAudioTracks().forEach(function (track) {
@@ -119,7 +120,7 @@ const Context = ({ children }) => {
     source.disconnect();
 
     if (audioUrl) {
-      setUrl(URL.createObjectURL(audioUrl).substr(5));
+      setUrl(URL.createObjectURL(audioUrl).substr(5) + '.mp4');
       console.log('url', url); // 출력된 링크에서 녹음된 오디오 확인 가능
     }
 
@@ -130,23 +131,26 @@ const Context = ({ children }) => {
     });
 
     setDisabled(false);
-    console.log(sound); // File 정보 출력
   };
 
-  const play = (e) => {
+  const play = () => {
     const audio = new Audio(URL.createObjectURL(audioUrl));
     audio.loop = false;
     audio.volume = 1;
     audio.play();
   };
 
+  const pause = () => {
+    // audio.pause();
+    // audio.currentTime = 0;
+  };
+
   const handleSelect = (e) => {
     setTimeChange(e.target.value);
-    console.log(timeChange);
   };
   return (
     <RecordContext.Provider
-      value={{ onRecAudio, offRecAudio, play, timer, recordStatus, setStatus, url, handleSelect }}>
+      value={{ onRecAudio, offRecAudio, play, pause, timer, recordStatus, setStatus, url, handleSelect }}>
       {children}
     </RecordContext.Provider>
   );

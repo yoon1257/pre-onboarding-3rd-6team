@@ -2,12 +2,12 @@ import React, { useRef, useContext } from 'react';
 import { RecordContext } from '../../contexts/Context';
 import PlayControlBox from './PlayControlBox';
 import SelectRecordInput from './SelectRecordInput';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 const MovingBar = () => {
   const { recordStatus, setStatus } = useContext(RecordContext);
   const handleUpDown = () => {
-    // console.log(e.target.classList);
+
     console.log(containerRef.current.classList);
     containerRef.current.classList.toggle('move');
   };
