@@ -15,18 +15,6 @@ export default function Timer() {
     setSeconds(timer % 60 < 10 ? '0' + (timer % 60) : timer % 60);
   }, [timer]);
 
-  //   const countdown = () => {
-  //     if (parseInt(timer) < 60) {
-  //       setSeconds(parseInt(timer) + 1);
-  //     }
-  //     if (parseInt(timer)%60 === 1) {
-  //       setSeconds(0);
-  //       setMinutes(parseInt(minutes) + 1);
-  //     }
-  //   };
-  //   return countdown;
-  // }, [timer]);
-
   return (
     <h2 className={recordStatus}>
       {hours}:{minutes}:{seconds}

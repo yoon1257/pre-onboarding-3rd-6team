@@ -7,8 +7,6 @@ import styled from 'styled-components';
 const MovingBar = () => {
   const { recordStatus, setStatus } = useContext(RecordContext);
   const handleUpDown = () => {
-
-    console.log(containerRef.current.classList);
     containerRef.current.classList.toggle('move');
   };
 
