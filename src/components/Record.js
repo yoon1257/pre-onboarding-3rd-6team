@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Timer from './Timer';
 
 function App() {
   const [stream, setStream] = useState();
@@ -7,10 +8,12 @@ function App() {
   const [source, setSource] = useState();
   const [analyser, setAnalyser] = useState();
   const [audioUrl, setAudioUrl] = useState();
-  const [disabled, setDisabled] = useState(true); // 😀😀😀
+  const [disabled, setDisabled] = useState(true);
+  const [playTimer, setPlayTimer] = useState(false);
+  const [recordTimer, setRecordTimer] = useState(false);
 
   const onRecAudio = () => {
-    setDisabled(true); // 😀😀😀
+    setDisabled(true);
 
     // 음원정보를 담은 노드를 생성하거나 음원을 실행또는 디코딩 시키는 일을 한다
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -32,6 +35,7 @@ function App() {
       setStream(stream);
       setMedia(mediaRecorder);
       makeSound(stream);
+      setRecordTimer(!recordTimer);
 
       analyser.onaudioprocess = function (e) {
         // 3분(180초) 지나면 자동으로 음성 저장 및 녹음 중지
@@ -61,6 +65,7 @@ function App() {
     media.ondataavailable = function (e) {
       setAudioUrl(e.data);
       setOnRec(true);
+      setRecordTimer(false);
     };
 
     // 모든 트랙에서 stop()을 호출해 오디오 스트림을 정지
@@ -85,7 +90,6 @@ function App() {
       type: 'audio',
     });
 
-    // 😀😀😀
     setDisabled(false);
     console.log(sound); // File 정보 출력
   };
@@ -95,14 +99,17 @@ function App() {
     audio.loop = false;
     audio.volume = 1;
     audio.play();
+    setPlayTimer(!playTimer);
   };
 
   return (
     <>
       <button onClick={onRec ? onRecAudio : offRecAudio}>녹음</button>
+      {recordTimer && <Timer />}
       <button onClick={play} disabled={disabled}>
         재생
       </button>
+      {playTimer && <Timer />}
     </>
   );
 }
