@@ -17,7 +17,14 @@ const Main = (props) => {
         </Logo>
       </header>
       <main className='sound-status-screen'>
-        <img className='sound-wave' src={recordStatus === 'stop' ? waveSoundPlay : waveSoundStop} alt='sound-wave' />
+        {/* <img className='sound-wave' src={recordStatus === 'stop' ? waveSoundPlay : waveSoundStop} alt='sound-wave' /> */}
+        <div className='wave-box'>
+          <div className={`sound-wave-box ${recordStatus}`}>
+            <img className='play-wave' alt='sound-wave' src={waveSoundPlay} />
+          </div>
+          <img className='stop-wave' alt='sound-wave' src={waveSoundStop} />
+        </div>
+
         <div className='sound-time'> {recordStatus === 'stop' ? <Timer /> : '0:00'}</div>
       </main>
       <MovingBar recordStatus={recordStatus} setStatus={setStatus} />
@@ -49,15 +56,46 @@ const RecorderContainer = styled.div`
   }
 
   .sound-status-screen {
-    ${FlexCenter};
-    flex-direction: column;
-    justify-content: space-evenly;
+    margin: 0 auto;
     height: 55vh;
-    padding: 5em;
+    /* padding: 5em; */
 
-    .sound-wave {
+    /* .sound-wave {
       width: 11em;
-      /* flex-basis: 30vh; */
+    } */
+    .wave-box {
+      position: relative;
+      width: 11em;
+      margin: 0 auto;
+
+      .record {
+        width: 0;
+        transition: width 1s;
+      }
+
+      .stop {
+        width: 11em;
+        transition: width 1s;
+      }
+    }
+    .sound-wave-box {
+      position: relative;
+      z-index: 100;
+      transition: width 1s;
+      overflow: hidden;
+
+      .play-wave {
+        /* z-index: 10; */
+        width: 11em;
+        /* height: 11em; */
+      }
+    }
+    .stop-wave {
+      z-index: 1;
+      position: absolute;
+      top: 0px;
+      width: 11em;
+      height: 11em;
     }
 
     .sound-time {
@@ -68,11 +106,11 @@ const RecorderContainer = styled.div`
       font-size: 1.5em;
       font-weight: 500;
     }
-  }
 
-  .move {
-    transform: translateY(-55vh);
-    transition: all 0.3s ease-in;
+    .move {
+      transform: translateY(-55vh);
+      transition: all 0.3s ease-in;
+    }
   }
 `;
 

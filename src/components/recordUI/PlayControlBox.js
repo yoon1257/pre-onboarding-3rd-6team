@@ -5,22 +5,28 @@ import { BiReset, BiDownArrowCircle } from 'react-icons/bi';
 import { BsCircleFill, BsStopCircle, BsPlayCircle, BsPauseCircleFill } from 'react-icons/bs';
 
 const PlayControlBox = ({ recordStatus, setStatus }) => {
+  const { onRecAudio, offRecAudio, play } = useContext(RecordContext);
   const handleBtnChange = () => {
     if (recordStatus === 'record') setStatus('stop');
     else if (recordStatus === 'stop') setStatus('play');
     else if (recordStatus === 'play') setStatus('pause');
+    else if (recordStatus === 'pause') setStatus('play');
   };
-  const { babo } = useContext(RecordContext);
-  console.log('테스트', babo);
+
   return (
     <StyledControlBox>
-      <OptionBtn className={recordStatus} onClick={() => setStatus('record')}>
+      <OptionBtn
+        className={recordStatus}
+        onClick={() => {
+          setStatus('record');
+          window.location.reload();
+        }}>
         <BiReset />
       </OptionBtn>
       <button className='play-control-btn' onClick={handleBtnChange}>
-        {recordStatus === 'record' && <BsCircleFill />}
-        {recordStatus === 'stop' && <BsStopCircle />}
-        {recordStatus === 'play' && <BsPlayCircle />}
+        {recordStatus === 'record' && <BsCircleFill onClick={onRecAudio} />}
+        {recordStatus === 'stop' && <BsStopCircle onClick={offRecAudio} />}
+        {recordStatus === 'play' && <BsPlayCircle onClick={play} />}
         {recordStatus === 'pause' && <BsPauseCircleFill />}
       </button>
       <OptionBtn className={recordStatus}>
