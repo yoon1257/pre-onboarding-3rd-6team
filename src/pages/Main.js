@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import MovingBar from '../components/recordUI/MovingBar';
 import Timer from '../components/Timer';
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import logo from '../asset/images/logo.png';
 import waveSoundPlay from '../asset/images/wave-sound-blue.png';
 import waveSoundStop from '../asset/images/wave-sound-sky.png';
@@ -38,6 +38,16 @@ const FlexCenter = css`
   align-items: center;
 `;
 
+const WaveMove = keyframes`
+  0% {
+    width: 11em;
+  }
+
+  100% {
+    width: 0;
+  }
+`;
+
 const RecorderContainer = styled.div`
   height: 100vh;
   overflow-y: hidden;
@@ -57,7 +67,7 @@ const RecorderContainer = styled.div`
 
   .sound-status-screen {
     margin: 0 auto;
-    height: 55vh;
+    height: fit-content;
     /* padding: 5em; */
 
     /* .sound-wave {
@@ -66,7 +76,7 @@ const RecorderContainer = styled.div`
     .wave-box {
       position: relative;
       width: 11em;
-      margin: 0 auto;
+      margin: 5em auto 0;
 
       .record {
         width: 0;
@@ -74,43 +84,42 @@ const RecorderContainer = styled.div`
       }
 
       .stop {
-        width: 11em;
-        transition: width 1s;
+        animation: ${WaveMove} 2s 1s infinite linear alternate;
+        /* width: 11em;
+        transition: width 1s; */
       }
     }
-    .sound-wave-box {
-      position: relative;
-      z-index: 100;
-      transition: width 1s;
-      overflow: hidden;
+  }
+  .sound-wave-box {
+    position: relative;
+    z-index: 1;
+    transition: width 1s;
+    overflow: hidden;
 
-      .play-wave {
-        /* z-index: 10; */
-        width: 11em;
-        /* height: 11em; */
-      }
-    }
-    .stop-wave {
-      z-index: 1;
-      position: absolute;
-      top: 0px;
+    .play-wave {
       width: 11em;
-      height: 11em;
+      /* height: 11em; */
     }
+  }
+  .stop-wave {
+    position: absolute;
+    top: 0px;
+    width: 11em;
+    height: 11em;
+  }
 
-    .sound-time {
-      ${FlexCenter};
-      margin-top: 1em;
-      height: 2em;
-      color: #45c7db;
-      font-size: 1.5em;
-      font-weight: 500;
-    }
+  .sound-time {
+    ${FlexCenter};
+    margin: 1.5em 0;
+    height: 2em;
+    color: #45c7db;
+    font-size: 1.5em;
+    font-weight: 500;
+  }
 
-    .move {
-      transform: translateY(-55vh);
-      transition: all 0.3s ease-in;
-    }
+  .move {
+    transform: translateY(-55vh);
+    transition: all 0.3s ease-in;
   }
 `;
 

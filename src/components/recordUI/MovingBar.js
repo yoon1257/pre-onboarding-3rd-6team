@@ -19,11 +19,13 @@ const MovingBar = ({ recordStatus, setStatus }) => {
 };
 
 const StyledMovingBar = styled.div`
+  position: relative;
   width: 100%;
   height: 90vh;
   padding: 12px;
   background-color: #f5f5f5;
   border-radius: 25px;
+  z-index: 999;
 
   .click-bar {
     display: flex;
