@@ -1,13 +1,18 @@
 # ✨ 프리온보딩 프론트 6팀 2주차 3번미션
 
+[📌링크](https://yoon1257.github.io/pre-onboarding-3rd-6team)
+<br/>
+<br/>
+
 ## 프로젝트 설명
 
 - 오디오를 녹음하고, 재생하는 등 오디오 파일을 관리하는 프로그램을 개발합니다
-- 반응형 페이지를 구성합니다 
+- 반응형 페이지를 구성합니다
   <br/>
   <br/>
 
 ## 언어
+
 - JavaScript
 - React.js
   <br/>
@@ -27,7 +32,7 @@
 
 ## ✅ 설치방법
 
-1. Node.JS를 다운받아 설치해주세요. 
+1. Node.JS를 다운받아 설치해주세요.
 
 ```
 https://nodejs.org/
@@ -62,8 +67,6 @@ npm run start
 
 <br/>
 
-
-
    <br/>
    <br/>
    <br/>
@@ -74,9 +77,9 @@ npm run start
 
 # 기능 분담
 
-> 박기호 - 타이머에 따른 녹음기능 
+> 박기호 - 타이머에 따른 녹음기능
 
-> 이유나 - 녹음 및 재생기능 
+> 이유나 - 녹음 및 재생기능
 
 > 정예원 - 전체 UI, 레이아웃 및 반응형
 
@@ -86,11 +89,9 @@ npm run start
 
 ## ✅ 메인 카테고리별 Nav 구현
 
-
-
 # 팀원소개
 
-### ✅ 프론트엔드 박기호 
+### ✅ 프론트엔드 박기호
 
 - 깃허브 https://github.com/GPontheG
 
@@ -98,9 +99,6 @@ npm run start
 
 - 깃허브 https://github.com/yoon1257
 
-
 ### ✅ 프론트엔드 정예원
 
 - 깃허브 https://github.com/ioni19
-
-
