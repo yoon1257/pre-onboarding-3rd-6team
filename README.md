@@ -70,12 +70,17 @@ npm run start
 - ✅ 프로젝트내 이미지는 모두 (주)하이 에서 제공받았습니다.
   <br/>
   <br/>
+  
 ## ✅ 상세페이지 
+
 1.녹음 및 재생 화면
+
 ![녹음및재생](https://user-images.githubusercontent.com/108171986/195737419-ee4ffbc6-34a2-49e4-875d-e670f6c718af.gif)
+
 <br/>
 
 2.반응형웹페이지 
+
 ![반응형 웹페이지 구성 ](https://user-images.githubusercontent.com/108171986/195737428-78395845-3856-4d58-94ca-4f2a65a91d85.gif)
 
 # 기능 분담
